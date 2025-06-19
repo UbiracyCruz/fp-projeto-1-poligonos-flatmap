@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -131,8 +132,23 @@ public class PoligonosApp extends Application {
      * "triângulo", "pentágono", "hexágono" ou apenas um "polígono" geral quando tiver mais de 6 lados.
      */
     protected List<String> tipoPoligonos(){
-        // TODO Apague esta linha e a próxima e implemente seu código
-        return List.of();
+        var resultado = new ArrayList<String>();
+        var list = pontosPoligonos
+                .stream()
+                .flatMap(pontos -> Stream.of(pontos.size()))
+                .toList();
+
+        list.forEach(m -> {
+            switch (m){
+                case 3 -> resultado.add("Triângulo");
+                case 4 -> resultado.add("Quadrilátero");
+                case 5 -> resultado.add("Pentágono");
+                case 6 -> resultado.add("Hexágono");
+                default -> resultado.add("Polígono");
+            }
+        });
+
+        return resultado;
     }
 
     /**
