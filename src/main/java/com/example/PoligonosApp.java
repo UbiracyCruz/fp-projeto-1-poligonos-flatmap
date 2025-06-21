@@ -144,7 +144,7 @@ public class PoligonosApp extends Application {
                 case 4 -> resultado.add("Quadrilátero");
                 case 5 -> resultado.add("Pentágono");
                 case 6 -> resultado.add("Hexágono");
-                default -> resultado.add("Polígono");
+                default -> resultado.add(m < 3 ? "Não é um polígono" : "Polígono");
             }
         });
 
