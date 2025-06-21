@@ -9,9 +9,11 @@ import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -192,8 +194,16 @@ public class PoligonosApp extends Application {
      * @return uma lista contendo o perímetro de cada polígono
      */
     protected List<Double> perimetros(){
-        // TODO Apague esta linha e a próxima e implemente seu código
-        return List.of();
+        return pontosPoligonos
+                .stream()
+                .flatMap(p -> {
+                    Point primeiro = p.getFirst();
+                    Point ultimo = p.getLast();
+                    var resultado = p.stream().reduce(new Point(ultimo, primeiro), Point::new);
+                    return Stream.of(resultado);
+                })
+                .map(Point::distance)
+                .toList();
     }
 }
 
