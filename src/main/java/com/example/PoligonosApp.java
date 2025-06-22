@@ -8,12 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -79,6 +76,16 @@ public class PoligonosApp extends Application {
         launch(args);
     }
 
+    private static String tipoPoligono(List<Point> pontos) {
+        return switch (pontos.size()) {
+            case 3 -> "Triângulo";
+            case 4 -> "Quadrilátero";
+            case 5 -> "Pentágono";
+            case 6 -> "Hexágono";
+            default -> pontos.size() < 3 ? "Não é um polígono" : "Polígono";
+        };
+    }
+
     /**
      * Inicia a apresentação da interface gráfica da aplicação.
      * @param mainStage janela inicial da aplicação
@@ -134,23 +141,10 @@ public class PoligonosApp extends Application {
      * "triângulo", "pentágono", "hexágono" ou apenas um "polígono" geral quando tiver mais de 6 lados.
      */
     protected List<String> tipoPoligonos(){
-        var resultado = new ArrayList<String>();
-        var list = pontosPoligonos
+        return pontosPoligonos
                 .stream()
-                .flatMap(pontos -> Stream.of(pontos.size()))
+                .map(PoligonosApp::tipoPoligono)
                 .toList();
-
-        list.forEach(m -> {
-            switch (m){
-                case 3 -> resultado.add("Triângulo");
-                case 4 -> resultado.add("Quadrilátero");
-                case 5 -> resultado.add("Pentágono");
-                case 6 -> resultado.add("Hexágono");
-                default -> resultado.add(m < 3 ? "Não é um polígono" : "Polígono");
-            }
-        });
-
-        return resultado;
     }
 
     /**
